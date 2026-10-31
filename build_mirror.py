@@ -36,6 +36,15 @@ CATEGORY_LINES = (
     '    <itunes:category text="Management"/>\n'
     "  </itunes:category>\n"
 )
+# Spotify for Creators verifies ownership by emailing a code to the address
+# in itunes:owner; the platform feed carries no owner block, so the mirror
+# adds one (name + the user's show-contact email).
+OWNER_LINES = (
+    "  <itunes:owner>\n"
+    "    <itunes:name>Mohit Agarwal</itunes:name>\n"
+    "    <itunes:email>mohit.a91@gmail.com</itunes:email>\n"
+    "  </itunes:owner>\n"
+)
 
 
 def _rewrite_self_link(text: str) -> str:
@@ -62,7 +71,8 @@ def build(source_text: str) -> str:
     header = "".join(lines[:header_end])
     need_author = "<itunes:author>" not in header
     need_category = "<itunes:category" not in header
-    if not need_author and not need_category:
+    need_owner = "<itunes:owner>" not in header
+    if not need_author and not need_category and not need_owner:
         return source_text
 
     insert_at = None
@@ -83,6 +93,8 @@ def build(source_text: str) -> str:
         block += AUTHOR_LINE
     if need_category:
         block += CATEGORY_LINES
+    if need_owner:
+        block += OWNER_LINES
     lines.insert(insert_at, block)
     return "".join(lines)
 

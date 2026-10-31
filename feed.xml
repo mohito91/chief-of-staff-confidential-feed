@@ -12,6 +12,10 @@ AI Generated</description>
   <itunes:category text="Business">
     <itunes:category text="Management"/>
   </itunes:category>
+  <itunes:owner>
+    <itunes:name>Mohit Agarwal</itunes:name>
+    <itunes:email>mohit.a91@gmail.com</itunes:email>
+  </itunes:owner>
   <atom:link href="https://mohito91.github.io/chief-of-staff-confidential-feed/feed.xml" rel="self" type="application/rss+xml"/>
   <itunes:image href="https://muse.ai/podcasts/media/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154/cover.png"/>
   <image>
