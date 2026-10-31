@@ -1,0 +1,22 @@
+name: Sync mirror feed
+on:
+  schedule:
+    - cron: "30 14 * * 1,4"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch source feed
+        run: curl -fsSL "https://muse.ai/podcasts/feed/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154" -o source-feed.xml
+      - name: Build mirror
+        run: python3 build_mirror.py source-feed.xml feed.xml
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add feed.xml
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "Sync mirror feed"; git push; fi
