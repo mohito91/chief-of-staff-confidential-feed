@@ -170,6 +170,34 @@ def _rewrite_show_description(text: str) -> str:
     return head + sep + tail
 
 
+# The show's website. The platform feed carries no channel <link> at all, so
+# podcast apps fall back to the feed's own muse.ai address, which is not a
+# web page. The mirror hosts a simple show page in this same GitHub Pages
+# repo (index.html) and points the channel <link> — and the <image> block's
+# link, which some apps read — at it (user request, 2026-11-02).
+SITE_URL = "https://mohito91.github.io/chief-of-staff-confidential-feed/"
+
+
+def _set_website_link(text: str) -> str:
+    head, sep, tail = text.partition("<item>")
+    # Channel <link>: insert once, right after the channel description.
+    if f"<link>{SITE_URL}</link>" not in head:
+        head = head.replace(
+            "</description>\n",
+            f"</description>\n  <link>{SITE_URL}</link>\n",
+            1,
+        )
+    # The <image> block's link currently duplicates the feed URL; point it
+    # at the site as well.
+    def _fix_image(match: "re.Match[str]") -> str:
+        return re.sub(
+            r"<link>[^<]*</link>", f"<link>{SITE_URL}</link>", match.group(0), count=1
+        )
+
+    head = re.sub(r"<image>.*?</image>", _fix_image, head, count=1, flags=re.DOTALL)
+    return head + sep + tail
+
+
 def _rewrite_descriptions(text: str) -> str:
     from xml.sax.saxutils import escape
 
@@ -266,6 +294,7 @@ def _rewrite_self_link(text: str) -> str:
 
 def build(source_text: str) -> str:
     source_text = _rewrite_show_description(source_text)
+    source_text = _set_website_link(source_text)
     source_text = _rewrite_descriptions(source_text)
     source_text = _add_itunes_titles(source_text)
     source_text = _add_episode_numbers(source_text)
