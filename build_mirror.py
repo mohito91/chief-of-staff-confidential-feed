@@ -100,6 +100,36 @@ def _add_episode_numbers(text: str) -> str:
     return text
 
 
+def _add_itunes_titles(text: str) -> str:
+    """Mirror each item's <title> into <itunes:title> (identical text).
+
+    Apple's display rule: an <itunes:episode> number only surfaces in the
+    episode LIST when the item also carries an <itunes:title>; with the
+    episode tag alone it shows only on the episode's own page. The itunes
+    title is byte-identical to the existing title, so nothing about how any
+    app renders the title changes. Idempotent.
+    """
+    out = []
+    pos = 0
+    for match in re.finditer(r"<item>.*?</item>", text, re.DOTALL):
+        out.append(text[pos:match.start()])
+        block = match.group(0)
+        block = re.sub(r"[ \t]*<itunes:title>.*?</itunes:title>\n", "", block)
+        title_match = re.search(r"(<title>.*?</title>\n)", block, re.DOTALL)
+        if title_match:
+            inner = re.search(r"<title>(.*?)</title>", title_match.group(1), re.DOTALL).group(1)
+            insert_at = title_match.end(1)
+            block = (
+                block[:insert_at]
+                + f"    <itunes:title>{inner}</itunes:title>\n"
+                + block[insert_at:]
+            )
+        out.append(block)
+        pos = match.end()
+    out.append(text[pos:])
+    return "".join(out)
+
+
 def _add_transcript_tags(text: str) -> str:
     if "xmlns:podcast" not in text:
         text = text.replace(
@@ -144,6 +174,7 @@ def _rewrite_self_link(text: str) -> str:
 
 
 def build(source_text: str) -> str:
+    source_text = _add_itunes_titles(source_text)
     source_text = _add_episode_numbers(source_text)
     source_text = _add_transcript_tags(source_text)
     source_text = _rewrite_self_link(source_text)
