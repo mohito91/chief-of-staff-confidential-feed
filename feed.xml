@@ -91,6 +91,7 @@ AI Generated</description>
     <enclosure url="https://muse.ai/podcasts/media/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154/ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1.mp3" length="2879461" type="audio/mpeg"/>
     <guid isPermaLink="false">ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1</guid>
     <itunes:episode>5</itunes:episode>
+    <podcast:transcript url="https://mohito91.github.io/chief-of-staff-confidential-feed/transcripts/everything-is-a-project.vtt" type="text/vtt" language="en"/>
     <pubDate>Mon, 02 Nov 2026 13:57:05 +0000</pubDate>
     <itunes:duration>359</itunes:duration>
   </item>
