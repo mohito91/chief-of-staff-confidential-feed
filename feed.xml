@@ -4,7 +4,13 @@
      xmlns:podcast="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md">
 <channel>
   <title>Chief of Staff Confidential</title>
-  <description>A weekly interview podcast helping chiefs of staff get better at their jobs. Maya interviews Marcus on the skills that matter most — the confidential truths behind the role.
+  <description>Every executive has one. Almost nobody trains for the job.
+
+Chief of Staff Confidential is a weekly interview podcast about the real work of chiefs of staff — the role behind the title. Each Monday, Maya asks the questions a chief of staff actually wrestles with, and Marcus answers from the chair: managing up, running the room, owning the calendar, coaching the principal, and making decisions land across an executive office.
+
+No theory, no jargon. One question, one story, one idea you can use the same week — whether you're a first-time chief of staff or a seasoned one.
+
+New episodes every Monday. Created by Mohit Agarwal.
 
 AI Generated</description>
   <language>en</language>
@@ -75,6 +81,18 @@ AI Generated</description>
     <podcast:transcript url="https://mohito91.github.io/chief-of-staff-confidential-feed/transcripts/own-the-screen.vtt" type="text/vtt" language="en"/>
     <pubDate>Mon, 26 Oct 2026 12:56:46 +0000</pubDate>
     <itunes:duration>304</itunes:duration>
+  </item>
+  <item>
+    <title>Everything Is a Project</title>
+    <itunes:title>Everything Is a Project</itunes:title>
+    <description>Every chief of staff is running projects, whether they call them that or not. Maya and Marcus make the case that project management is the hidden engine of the role: scoping the ambiguous, sequencing the urgent, and landing outcomes with no direct authority. The first episode in Maya&apos;s probing interview style — she pushes Marcus for the failure modes, not just the framework. Created by Mohit Agarwal.
+
+AI Generated</description>
+    <enclosure url="https://muse.ai/podcasts/media/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154/ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1.mp3" length="2879461" type="audio/mpeg"/>
+    <guid isPermaLink="false">ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1</guid>
+    <itunes:episode>5</itunes:episode>
+    <pubDate>Mon, 02 Nov 2026 13:57:05 +0000</pubDate>
+    <itunes:duration>359</itunes:duration>
   </item>
 </channel>
 </rss>
