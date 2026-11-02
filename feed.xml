@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
-     xmlns:atom="http://www.w3.org/2005/Atom">
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:podcast="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md">
 <channel>
   <title>Chief of Staff Confidential</title>
   <description>A weekly interview podcast helping chiefs of staff get better at their jobs. Maya interviews Marcus on the skills that matter most — the confidential truths behind the role.
@@ -50,6 +51,7 @@ AI Generated</description>
 AI Generated</description>
     <enclosure url="https://muse.ai/podcasts/media/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154/ep-b484f639-8a56-47ea-9daf-e7cd672adfb3.mp3" length="2133157" type="audio/mpeg"/>
     <guid isPermaLink="false">ep-b484f639-8a56-47ea-9daf-e7cd672adfb3</guid>
+    <podcast:transcript url="https://mohito91.github.io/chief-of-staff-confidential-feed/transcripts/youre-not-alone.vtt" type="text/vtt" language="en"/>
     <pubDate>Mon, 19 Oct 2026 12:56:56 +0000</pubDate>
     <itunes:duration>266</itunes:duration>
   </item>
