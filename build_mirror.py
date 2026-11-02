@@ -58,6 +58,7 @@ TRANSCRIPTS = {
     "ep-fd223d1c-cbe4-4d8c-97eb-807416e93194": _T + "the-reading-list.vtt",
     "ep-b484f639-8a56-47ea-9daf-e7cd672adfb3": _T + "youre-not-alone.vtt",
     "ep-a9668dfc-e931-4bf6-ab04-7efc428f5a95": _T + "own-the-screen.vtt",
+    "ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1": _T + "everything-is-a-project.vtt",
 }
 
 
