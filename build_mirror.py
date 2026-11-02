@@ -128,6 +128,47 @@ DESCRIPTIONS = {
 }
 
 
+# Longer show (channel) description, approved by the user 2026-11-02.
+# The platform feed's channel description is locked at creation (173 content
+# characters), so the mirror carries this fuller one instead: it names the
+# audience, the show's territory, and the cadence. The platform's
+# "\n\nAI Generated" suffix is re-appended verbatim, as with episode
+# descriptions. Text only — no episode audio or metadata is affected.
+SHOW_DESCRIPTION = (
+    "Every executive has one. Almost nobody trains for the job.\n\n"
+    "Chief of Staff Confidential is a weekly interview podcast about the "
+    "real work of chiefs of staff — the role behind the title. Each Monday, "
+    "Maya asks the questions a chief of staff actually wrestles with, and "
+    "Marcus answers from the chair: managing up, running the room, owning "
+    "the calendar, coaching the principal, and making decisions land across "
+    "an executive office.\n\n"
+    "No theory, no jargon. One question, one story, one idea you can use "
+    "the same week — whether you're a first-time chief of staff or a "
+    "seasoned one.\n\n"
+    "New episodes every Monday. Created by Mohit Agarwal."
+)
+
+
+def _rewrite_show_description(text: str) -> str:
+    """Replace the channel-level <description> with SHOW_DESCRIPTION.
+
+    Only the header before the first <item> is touched, and only its first
+    <description> (the show's). Idempotent: re-running replaces the same
+    element with the same content.
+    """
+    from xml.sax.saxutils import escape
+
+    head, sep, tail = text.partition("<item>")
+    head, _ = re.subn(
+        r"<description>.*?</description>",
+        "<description>" + escape(SHOW_DESCRIPTION) + "\n\nAI Generated</description>",
+        head,
+        count=1,
+        flags=re.DOTALL,
+    )
+    return head + sep + tail
+
+
 def _rewrite_descriptions(text: str) -> str:
     from xml.sax.saxutils import escape
 
@@ -223,6 +264,7 @@ def _rewrite_self_link(text: str) -> str:
 
 
 def build(source_text: str) -> str:
+    source_text = _rewrite_show_description(source_text)
     source_text = _rewrite_descriptions(source_text)
     source_text = _add_itunes_titles(source_text)
     source_text = _add_episode_numbers(source_text)
