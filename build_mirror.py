@@ -52,11 +52,12 @@ OWNER_LINES = (
 # this same GitHub Pages repo, and Podcasts Connect is set to display the
 # transcripts we provide. Keyed by episode GUID so syncs keep the tag.
 PODCAST_NS = "https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md"
+_T = "https://mohito91.github.io/chief-of-staff-confidential-feed/transcripts/"
 TRANSCRIPTS = {
-    "ep-b484f639-8a56-47ea-9daf-e7cd672adfb3": (
-        "https://mohito91.github.io/chief-of-staff-confidential-feed/"
-        "transcripts/youre-not-alone.vtt"
-    ),
+    "ep-a078b6e2-06a3-41c6-804f-ee92c67da823": _T + "three-takeaways-for-first-time-chiefs-of-staff.vtt",
+    "ep-fd223d1c-cbe4-4d8c-97eb-807416e93194": _T + "the-reading-list.vtt",
+    "ep-b484f639-8a56-47ea-9daf-e7cd672adfb3": _T + "youre-not-alone.vtt",
+    "ep-a9668dfc-e931-4bf6-ab04-7efc428f5a95": _T + "own-the-screen.vtt",
 }
 
 
