@@ -100,6 +100,55 @@ def _add_episode_numbers(text: str) -> str:
     return text
 
 
+# Lengthened descriptions for episodes 1-2 (user request, 2026-11-02).
+# They were published before the ~350-450 character rule, at 177 and 149
+# content characters, so the platform-appended "AI Generated" line showed
+# above the fold on the show page. These replacements match the length and
+# voice of the later episodes; the platform's "\n\nAI Generated" suffix is
+# re-appended verbatim so the tag remains, just below the fold.
+DESCRIPTIONS = {
+    "ep-a078b6e2-06a3-41c6-804f-ee92c67da823": (
+        "Maya interviews Marcus on the three lessons every first-time chief "
+        "of staff needs. One: multiply the principal — extend their reach "
+        "without ever stealing their voice. Two: run the operating system — "
+        "the calendar, the priorities, and the follow-through that keep an "
+        "executive office moving. Three: build trust the only way it lasts, "
+        "through discretion about what you hear and candor about what you "
+        "think. The starter kit, in one conversation."
+    ),
+    "ep-fd223d1c-cbe4-4d8c-97eb-807416e93194": (
+        "Maya asks Marcus for the five books every chief of staff should "
+        "read — and the one takeaway from each that you can use on Monday "
+        "morning. Extreme Ownership, on owning the blame and sharing the "
+        "credit. Multipliers, on making everyone around you smarter. The "
+        "First 90 Days, on landing a new role fast. High Output Management, "
+        "on leverage. And Essentialism, on the disciplined pursuit of less. "
+        "Five books, five tools, one shelf."
+    ),
+}
+
+
+def _rewrite_descriptions(text: str) -> str:
+    from xml.sax.saxutils import escape
+
+    for guid, content in DESCRIPTIONS.items():
+        for match in re.finditer(r"<item>.*?</item>", text, re.DOTALL):
+            block = match.group(0)
+            if guid not in block:
+                continue
+            new_block, n = re.subn(
+                r"<description>.*?</description>",
+                "<description>" + escape(content) + "\n\nAI Generated</description>",
+                block,
+                count=1,
+                flags=re.DOTALL,
+            )
+            if n:
+                text = text[: match.start()] + new_block + text[match.end():]
+            break
+    return text
+
+
 def _add_itunes_titles(text: str) -> str:
     """Mirror each item's <title> into <itunes:title> (identical text).
 
@@ -174,6 +223,7 @@ def _rewrite_self_link(text: str) -> str:
 
 
 def build(source_text: str) -> str:
+    source_text = _rewrite_descriptions(source_text)
     source_text = _add_itunes_titles(source_text)
     source_text = _add_episode_numbers(source_text)
     source_text = _add_transcript_tags(source_text)
