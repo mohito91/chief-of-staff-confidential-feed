@@ -61,6 +61,45 @@ TRANSCRIPTS = {
 }
 
 
+def _add_episode_numbers(text: str) -> str:
+    """Stamp <itunes:episode> on every item, numbered by pubDate order.
+
+    Titles stay clean (user decision, 2026-11-02): the number lives in
+    metadata, which Apple Podcasts displays in the app. Numbering is derived
+    from pubDates, so it is correct for the whole back catalog and extends
+    itself automatically as new episodes publish. Idempotent: an existing
+    tag's value is recomputed, never duplicated.
+    """
+    from email.utils import parsedate_to_datetime
+
+    blocks = list(re.finditer(r"<item>.*?</item>", text, re.DOTALL))
+    dated = []
+    for match in blocks:
+        block = match.group(0)
+        date_match = re.search(r"<pubDate>([^<]+)</pubDate>", block)
+        if not date_match:
+            continue
+        try:
+            when = parsedate_to_datetime(date_match.group(1).strip())
+        except (TypeError, ValueError):
+            continue
+        dated.append((when, match))
+    dated.sort(key=lambda pair: pair[0])
+    numbers = {id(match): i + 1 for i, (_, match) in enumerate(dated)}
+
+    for match in reversed(blocks):
+        number = numbers.get(id(match))
+        if number is None:
+            continue
+        block = match.group(0)
+        block = re.sub(r"[ \t]*<itunes:episode>\d+</itunes:episode>\n", "", block)
+        guid_end = block.index("</guid>") + len("</guid>\n")
+        tag = f"    <itunes:episode>{number}</itunes:episode>\n"
+        block = block[:guid_end] + tag + block[guid_end:]
+        text = text[: match.start()] + block + text[match.end():]
+    return text
+
+
 def _add_transcript_tags(text: str) -> str:
     if "xmlns:podcast" not in text:
         text = text.replace(
@@ -80,6 +119,12 @@ def _add_transcript_tags(text: str) -> str:
             if guid not in block or "podcast:transcript" in block:
                 continue
             guid_end = block.index("</guid>") + len("</guid>\n")
+            # Sit below the episode-number line when one is present, so
+            # re-runs keep a stable tag order (guid, episode, transcript).
+            rest = block[guid_end:]
+            ep_line = re.match(r"[ \t]*<itunes:episode>\d+</itunes:episode>\n", rest)
+            if ep_line:
+                guid_end += ep_line.end()
             new_block = block[:guid_end] + tag + block[guid_end:]
             text = text[: match.start()] + new_block + text[match.end():]
             break
@@ -99,6 +144,7 @@ def _rewrite_self_link(text: str) -> str:
 
 
 def build(source_text: str) -> str:
+    source_text = _add_episode_numbers(source_text)
     source_text = _add_transcript_tags(source_text)
     source_text = _rewrite_self_link(source_text)
     lines = source_text.splitlines(keepends=True)
