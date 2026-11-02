@@ -46,6 +46,44 @@ OWNER_LINES = (
     "  </itunes:owner>\n"
 )
 
+# Creator-provided transcripts (Podcasting 2.0 <podcast:transcript>).
+# Apple's auto-generated transcript for episode 3 misspells "principal" as
+# "principle" (homophone ASR error); the corrected, timed VTT is hosted in
+# this same GitHub Pages repo, and Podcasts Connect is set to display the
+# transcripts we provide. Keyed by episode GUID so syncs keep the tag.
+PODCAST_NS = "https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md"
+TRANSCRIPTS = {
+    "ep-b484f639-8a56-47ea-9daf-e7cd672adfb3": (
+        "https://mohito91.github.io/chief-of-staff-confidential-feed/"
+        "transcripts/youre-not-alone.vtt"
+    ),
+}
+
+
+def _add_transcript_tags(text: str) -> str:
+    if "xmlns:podcast" not in text:
+        text = text.replace(
+            'xmlns:atom="http://www.w3.org/2005/Atom">',
+            'xmlns:atom="http://www.w3.org/2005/Atom"\n'
+            f'     xmlns:podcast="{PODCAST_NS}">',
+            1,
+        )
+    for guid, url in TRANSCRIPTS.items():
+        # Find the <item> block containing this GUID and add the tag once.
+        tag = (
+            f'    <podcast:transcript url="{url}" type="text/vtt" '
+            'language="en"/>\n'
+        )
+        for match in re.finditer(r"<item>.*?</item>", text, re.DOTALL):
+            block = match.group(0)
+            if guid not in block or "podcast:transcript" in block:
+                continue
+            guid_end = block.index("</guid>") + len("</guid>\n")
+            new_block = block[:guid_end] + tag + block[guid_end:]
+            text = text[: match.start()] + new_block + text[match.end():]
+            break
+    return text
+
 
 def _rewrite_self_link(text: str) -> str:
     head, sep, tail = text.partition("<item>")
@@ -60,6 +98,7 @@ def _rewrite_self_link(text: str) -> str:
 
 
 def build(source_text: str) -> str:
+    source_text = _add_transcript_tags(source_text)
     source_text = _rewrite_self_link(source_text)
     lines = source_text.splitlines(keepends=True)
 
