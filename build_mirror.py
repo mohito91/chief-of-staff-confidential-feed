@@ -198,6 +198,40 @@ def _set_website_link(text: str) -> str:
     return head + sep + tail
 
 
+# Episode title rewrite (user decision, 2026-11-02). Episode 1 shipped in
+# the show's launch era with a long descriptive title, "Three Takeaways for
+# First-Time Chiefs of Staff", while every later episode carries a short
+# hook title. The platform feed's title cannot be edited, so the mirror
+# renames the episode to "Take the Chair" — the same treatment as the
+# lengthened descriptions. Title metadata only: GUID, dates, numbering,
+# transcript and audio are untouched. Runs before _add_itunes_titles so the
+# <itunes:title> tag mirrors the new title automatically.
+TITLES = {
+    "ep-a078b6e2-06a3-41c6-804f-ee92c67da823": "Take the Chair",
+}
+
+
+def _rewrite_titles(text: str) -> str:
+    from xml.sax.saxutils import escape
+
+    for guid, title in TITLES.items():
+        for match in re.finditer(r"<item>.*?</item>", text, re.DOTALL):
+            block = match.group(0)
+            if guid not in block:
+                continue
+            new_block, n = re.subn(
+                r"<title>.*?</title>",
+                "<title>" + escape(title) + "</title>",
+                block,
+                count=1,
+                flags=re.DOTALL,
+            )
+            if n:
+                text = text[: match.start()] + new_block + text[match.end():]
+            break
+    return text
+
+
 def _rewrite_descriptions(text: str) -> str:
     from xml.sax.saxutils import escape
 
@@ -296,6 +330,7 @@ def build(source_text: str) -> str:
     source_text = _rewrite_show_description(source_text)
     source_text = _set_website_link(source_text)
     source_text = _rewrite_descriptions(source_text)
+    source_text = _rewrite_titles(source_text)
     source_text = _add_itunes_titles(source_text)
     source_text = _add_episode_numbers(source_text)
     source_text = _add_transcript_tags(source_text)
