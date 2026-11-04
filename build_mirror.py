@@ -175,7 +175,7 @@ def _rewrite_show_description(text: str) -> str:
 # web page. The mirror hosts a simple show page in this same GitHub Pages
 # repo (index.html) and points the channel <link> — and the <image> block's
 # link, which some apps read — at it (user request, 2026-11-02).
-SITE_URL = "https://mohito91.github.io/chief-of-staff-confidential-feed/"
+SITE_URL = "https://chiefofstaffconfidential.com/"
 
 
 def _set_website_link(text: str) -> str:
