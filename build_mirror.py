@@ -59,6 +59,7 @@ TRANSCRIPTS = {
     "ep-b484f639-8a56-47ea-9daf-e7cd672adfb3": _T + "youre-not-alone.vtt",
     "ep-a9668dfc-e931-4bf6-ab04-7efc428f5a95": _T + "own-the-screen.vtt",
     "ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1": _T + "everything-is-a-project.vtt",
+  "ep-5d88dbc7-1ef0-4698-8a1f-380d4c989c13": _T + "the-change-agent.vtt",
 }
 
 
