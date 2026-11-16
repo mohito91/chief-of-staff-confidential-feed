@@ -109,5 +109,18 @@ AI Generated</description>
     <pubDate>Mon, 09 Nov 2026 14:01:07 +0000</pubDate>
     <itunes:duration>334</itunes:duration>
   </item>
+  <item>
+    <title>The Storyteller</title>
+    <itunes:title>The Storyteller</itunes:title>
+    <description>Data informs, but stories persuade. Maya and Marcus explore storytelling as a chief of staff&apos;s superpower: shaping the principal&apos;s narrative, making numbers memorable, and delivering hard truths with dignity. If you&apos;ve ever watched a perfect slide deck die in a meeting, this episode explains what was missing. Created by Mohit Agarwal.
+
+AI Generated</description>
+    <enclosure url="https://muse.ai/podcasts/media/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154/ep-9c08168b-48cf-4c4f-b379-108609020111.mp3" length="2184229" type="audio/mpeg"/>
+    <guid isPermaLink="false">ep-9c08168b-48cf-4c4f-b379-108609020111</guid>
+    <itunes:episode>7</itunes:episode>
+    <podcast:transcript url="https://mohito91.github.io/chief-of-staff-confidential-feed/transcripts/the-storyteller.vtt" type="text/vtt" language="en"/>
+    <pubDate>Mon, 16 Nov 2026 14:00:40 +0000</pubDate>
+    <itunes:duration>273</itunes:duration>
+  </item>
 </channel>
 </rss>
