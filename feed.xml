@@ -122,5 +122,18 @@ AI Generated</description>
     <pubDate>Mon, 16 Nov 2026 14:00:40 +0000</pubDate>
     <itunes:duration>273</itunes:duration>
   </item>
+  <item>
+    <title>Protect Your Attention</title>
+    <itunes:title>Protect Your Attention</itunes:title>
+    <description>Attention is the scarcest resource in the executive suite, and everyone wants a piece of yours. Maya and Marcus share a chief of staff&apos;s system for guarding focus: sorting the incoming into Now, Soon, and Never, and the art of never saying no — showing the trade instead. A short, sharp episode on doing the work that matters. Created by Mohit Agarwal.
+
+AI Generated</description>
+    <enclosure url="https://muse.ai/podcasts/media/1400066373183018/e6f388c5-ecfa-4f01-83ba-9b94153db154/ep-f3fee252-a425-443f-8005-fe09866bce59.mp3" length="2151397" type="audio/mpeg"/>
+    <guid isPermaLink="false">ep-f3fee252-a425-443f-8005-fe09866bce59</guid>
+    <itunes:episode>8</itunes:episode>
+    <podcast:transcript url="https://mohito91.github.io/chief-of-staff-confidential-feed/transcripts/protect-your-attention.vtt" type="text/vtt" language="en"/>
+    <pubDate>Mon, 23 Nov 2026 14:03:03 +0000</pubDate>
+    <itunes:duration>268</itunes:duration>
+  </item>
 </channel>
 </rss>
