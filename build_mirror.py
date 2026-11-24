@@ -61,6 +61,7 @@ TRANSCRIPTS = {
     "ep-201f1b65-5c94-4b02-bcd1-c32dc8b5aad1": _T + "everything-is-a-project.vtt",
   "ep-5d88dbc7-1ef0-4698-8a1f-380d4c989c13": _T + "the-change-agent.vtt",
       "ep-9c08168b-48cf-4c4f-b379-108609020111": _T + "the-storyteller.vtt",
+  "ep-f3fee252-a425-443f-8005-fe09866bce59": _T + "protect-your-attention.vtt",
 }
 
 
